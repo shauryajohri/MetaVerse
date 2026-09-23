@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   base: './', // relative asset paths so the Electron build can load from file://
   server: {
-    port: 5173,
+    port: 5180,
     strictPort: true,
     proxy: { '/api': 'http://localhost:4000' },
   },

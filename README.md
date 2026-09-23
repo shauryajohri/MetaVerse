@@ -214,7 +214,7 @@ Planned modules include:
 
 ```bash
 npm install
-npm run dev           # web: API on :4000, app on http://localhost:5173
+npm run dev           # web: API on :4000, app on http://localhost:5180
 npm run dev:desktop   # same, plus the desktop window
 npm run desktop       # build the client and open it in the desktop shell
 ```
