@@ -1,0 +1,644 @@
+/* Student dashboard — shares tokens (colours, fonts) from styles.css */
+
+.dash {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 64px 1fr;
+  grid-template-areas:
+    'top top'
+    'nav main';
+  background: rgba(16, 20, 36, 0.55); /* dim the town so cards stay readable */
+}
+
+.topbar {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  color: #fff;
+  background: var(--ink);
+  box-shadow: 0 4px 0 0 rgba(8, 10, 22, 0.5);
+}
+
+.brand.small .brand-mark {
+  width: 22px;
+  height: 22px;
+  background:
+    linear-gradient(var(--gold), var(--gold)) 6px 6px / 10px 10px no-repeat,
+    var(--accent);
+  box-shadow: 0 0 0 3px #11131f;
+}
+
+.brand.small .brand-name {
+  font-size: 12px;
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.who span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.15;
+}
+
+.who small {
+  opacity: 0.7;
+}
+
+.btn-ghost {
+  padding: 8px 12px;
+  font-family: var(--font-display);
+  font-size: 9px;
+  color: #fff;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.55);
+}
+
+.btn-ghost:hover {
+  color: var(--ink);
+  background: var(--gold);
+  box-shadow: inset 0 0 0 3px var(--gold);
+}
+
+.sidenav {
+  grid-area: nav;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 14px;
+  background: rgba(22, 26, 44, 0.82);
+}
+
+.sidenav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  font-size: 18px;
+  color: #e6e3f0;
+  text-decoration: none;
+}
+
+.sidenav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sidenav a.active {
+  color: var(--ink);
+  background: var(--paper);
+  box-shadow:
+    inset 0 0 0 3px var(--ink),
+    inset 6px 0 0 0 var(--gold);
+}
+
+.sidenav a:focus-visible {
+  outline: 3px solid var(--gold);
+}
+
+.sidenav .ico {
+  width: 18px;
+  text-align: center;
+}
+
+.nav-foot {
+  margin-top: auto;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #9a98b0;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.12);
+}
+
+.content {
+  grid-area: main;
+  overflow-y: auto;
+  padding: 28px 32px 40px;
+}
+
+.content > * {
+  max-width: 1120px;
+}
+
+.loading {
+  color: #fff;
+  font-size: 18px;
+}
+
+.view-head {
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.view-head h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.view-head p {
+  margin: 0;
+  font-size: 17px;
+  opacity: 0.92;
+}
+
+.view-head .pct {
+  font-size: 12px;
+  padding: 2px 6px;
+  text-shadow: none;
+  background: var(--paper);
+}
+
+/* ---------- cards ---------- */
+
+.card {
+  margin-bottom: 20px;
+  padding: 20px 22px;
+  background: var(--paper);
+  box-shadow:
+    inset 0 0 0 3px var(--ink),
+    inset 0 -6px 0 0 var(--paper-2),
+    5px 5px 0 0 rgba(8, 10, 22, 0.4);
+}
+
+.card.flush {
+  padding: 3px;
+  overflow: hidden;
+}
+
+.card h3 {
+  margin: 0 0 14px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.card h4 {
+  margin: 18px 0 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 150px;
+}
+
+.stat-label {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+.stat-sub {
+  font-size: 15px;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+
+.pct {
+  font-family: var(--font-display);
+  font-size: 22px;
+}
+
+.pct.good {
+  color: #2f8a3a;
+}
+
+.pct.warn {
+  color: #b86f00;
+}
+
+.pct.bad {
+  color: var(--danger);
+}
+
+.pct.neutral {
+  color: var(--ink);
+}
+
+.list .pct,
+.att-count .pct {
+  font-size: 13px;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.eyebrow {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.card .project-title {
+  margin-top: 4px;
+}
+
+.muted-text {
+  margin: 8px 0 0;
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
+.empty {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: var(--ink-soft);
+}
+
+.btn-primary.slim {
+  width: auto;
+  height: 44px;
+  padding: 0 20px;
+  font-size: 11px;
+}
+
+/* ---------- bars, chips, dots ---------- */
+
+.bar {
+  position: relative;
+  height: 14px;
+  background: #fff;
+  box-shadow: inset 0 0 0 3px var(--ink);
+}
+
+.bar-fill {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  max-width: calc(100% - 6px);
+  background: repeating-linear-gradient(90deg, var(--fill) 0 6px, var(--fill-dark) 6px 8px);
+}
+
+.bar.good {
+  --fill: #5bbf52;
+  --fill-dark: #4aa843;
+}
+
+.bar.warn {
+  --fill: #f4b73a;
+  --fill-dark: #dd9f22;
+}
+
+.bar.bad {
+  --fill: #e0584f;
+  --fill-dark: #c7443c;
+}
+
+.bar-mark {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 3px;
+  margin-left: -1px;
+  background: var(--ink);
+}
+
+.chip {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 14px;
+  text-transform: capitalize;
+  white-space: nowrap;
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+
+.chip.present,
+.chip.completed {
+  color: #2f8a3a;
+  background: #e3f5dc;
+}
+
+.chip.absent {
+  color: var(--danger);
+  background: #fbe2e0;
+}
+
+.chip.in-progress {
+  color: #9a6200;
+  background: #fdf0cf;
+}
+
+.chip.upcoming {
+  color: var(--ink-soft);
+  background: #eceaf2;
+}
+
+.dots {
+  display: flex;
+  gap: 3px;
+}
+
+.dot-rec {
+  width: 10px;
+  height: 14px;
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.dot-rec.present {
+  background: #5bbf52;
+}
+
+.dot-rec.absent {
+  background: #e0584f;
+}
+
+.tag {
+  margin-left: 8px;
+  padding: 1px 6px;
+  font-size: 12px;
+  font-weight: 400;
+  vertical-align: 2px;
+  background: var(--gold);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+/* ---------- lists ---------- */
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 2px dashed var(--line);
+}
+
+.list li:first-child {
+  border-top: 0;
+}
+
+.list.compact li {
+  padding: 7px 0;
+}
+
+.list li > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.list strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.list small {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.list li.you {
+  margin: 0 -10px;
+  padding-inline: 10px;
+  background: #fdf3cf;
+}
+
+/* ---------- attendance table ---------- */
+
+.att-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) 84px minmax(0, 1.4fr) 164px;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  padding: 14px 20px;
+  text-align: left;
+  background: none;
+  border: 0;
+}
+
+button.att-row {
+  cursor: pointer;
+}
+
+button.att-row:hover {
+  background: rgba(244, 197, 66, 0.14);
+}
+
+button.att-row:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: -3px;
+}
+
+.att-head {
+  padding-block: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--paper-2);
+}
+
+.att-item {
+  border-top: 2px dashed var(--line);
+}
+
+.att-item.warn {
+  box-shadow: inset 6px 0 0 0 #f4b73a;
+}
+
+.att-item.bad {
+  box-shadow: inset 6px 0 0 0 var(--danger);
+}
+
+.att-subject,
+.att-count,
+.att-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.att-subject strong {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.att-row small {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.att-history {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 20px 18px;
+}
+
+.att-history .chip {
+  text-transform: none;
+}
+
+/* ---------- PBL ---------- */
+
+.pbl-att {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: var(--ink-soft);
+}
+
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline li {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  padding-bottom: 18px;
+}
+
+.timeline li:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 18px;
+  bottom: 0;
+  width: 3px;
+  background: var(--line);
+}
+
+.timeline li.completed:not(:last-child)::before {
+  background: #5bbf52;
+}
+
+.timeline .node {
+  flex: none;
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  background: #fff;
+  box-shadow: inset 0 0 0 3px var(--ink);
+}
+
+.timeline .completed .node {
+  background: #5bbf52;
+}
+
+.timeline .in-progress .node {
+  background: var(--gold);
+  animation: blink 1.4s steps(2) infinite;
+}
+
+.tl-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tl-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tl-top strong {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.tl-body small {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.remark {
+  margin: 4px 0 0;
+  padding: 6px 10px;
+  font-size: 15px;
+  background: var(--paper-2);
+}
+
+/* ---------- profile ---------- */
+
+.profile {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: #fff;
+  text-shadow: 0 3px 0 var(--accent-dark);
+  background: var(--accent);
+  box-shadow:
+    inset 0 0 0 4px var(--ink),
+    inset 0 -8px 0 0 var(--accent-dark);
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  gap: 14px 32px;
+  margin: 0 0 12px;
+}
+
+.details dt {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.details dd {
+  margin: 2px 0 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@media (max-width: 1180px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* drop the "last 12" strip so the table fits the 1024px desktop minimum */
+  .att-row {
+    grid-template-columns: minmax(0, 1.5fr) 84px minmax(0, 1.5fr);
+  }
+
+  .att-row > :nth-child(4) {
+    display: none;
+  }
+}

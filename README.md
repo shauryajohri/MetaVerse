@@ -223,7 +223,8 @@ Dev accounts (in-memory until the PostgreSQL schema lands):
 
 | Roll no.  | Password     | Role    |
 |-----------|--------------|---------|
-| `2301001` | `student123` | student |
+| `2301001` | `student123` | student (PBL group G-07 lead) |
+| `2301002`–`2301004` | `student123` | students in the same PBL group |
 | `T1001`   | `teacher123` | teacher |
 | `A0001`   | `admin123`   | admin   |
 

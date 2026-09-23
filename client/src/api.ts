@@ -32,6 +32,64 @@ export const login = (rollNo: string, password: string) =>
 export const fetchMe = (token: string) =>
   request<{ user: User }>('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } });
 
+// ---- student ----
+
+export interface Profile extends User {
+  course: string;
+  branch: string;
+  department: string;
+  semester: number;
+  section: string;
+  batch: string;
+  email: string;
+  pblGroup: string | null;
+}
+
+export interface AttendanceRecord {
+  date: string; // YYYY-MM-DD
+  status: 'present' | 'absent';
+  source: 'metaverse' | 'erp';
+}
+
+export interface Summary {
+  held: number;
+  attended: number;
+  percent: number;
+  canMiss: number;
+  mustAttend: number;
+}
+
+export interface SubjectAttendance extends Summary {
+  code: string;
+  name: string;
+  faculty: string;
+  records: AttendanceRecord[];
+}
+
+export interface Attendance {
+  threshold: number;
+  overall: Summary;
+  subjects: SubjectAttendance[];
+}
+
+export type MilestoneStatus = 'completed' | 'in-progress' | 'upcoming';
+
+export interface Pbl {
+  id: string;
+  mentor: { name: string; department: string };
+  members: { name: string; rollNo: string; role: string; you: boolean }[];
+  project: { title: string; domain: string; summary: string };
+  milestones: { title: string; due: string; status: MilestoneStatus; remarks: string | null }[];
+  attendance: Summary & { threshold: number; sessions: (AttendanceRecord & { topic: string })[] };
+}
+
+const authed = <T,>(path: string) =>
+  request<T>(path, { headers: { Authorization: `Bearer ${session.load() ?? ''}` } });
+
+export const fetchProfile = () => authed<Profile>('/api/student/profile');
+export const fetchAttendance = () => authed<Attendance>('/api/student/attendance');
+export const fetchPbl = () => authed<Pbl>('/api/student/pbl');
+
 // "Remember me" keeps the token across restarts; otherwise it dies with the tab/window.
 const KEY = 'metaverse.token';
 export const session = {

@@ -41,14 +41,20 @@ authRouter.post('/login', async (req, res) => {
   res.json({ token, user: publicUser(user) });
 });
 
-authRouter.get('/me', (req, res) => {
+/** Verifies the bearer token and puts the user on `req.user`. */
+export function requireAuth(req, res, next) {
   const token = req.headers.authorization?.replace(/^Bearer /, '');
   try {
     const { sub } = jwt.verify(token ?? '', SECRET);
-    const user = findById(sub);
-    if (!user) throw new Error('gone');
-    res.json({ user: publicUser(user) });
+    req.user = findById(sub);
+    if (!req.user) throw new Error('gone');
+    next();
   } catch {
     res.status(401).json({ error: 'Session expired. Please log in again.' });
   }
-});
+}
+
+export const requireRole = (...roles) => (req, res, next) =>
+  roles.includes(req.user.role) ? next() : res.status(403).json({ error: 'You do not have access to this.' });
+
+authRouter.get('/me', requireAuth, (req, res) => res.json({ user: publicUser(req.user) }));

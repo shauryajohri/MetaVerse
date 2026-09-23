@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import PixelTown from './town/PixelTown';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
+import StudentDashboard from './pages/student/StudentDashboard';
 import { fetchMe, session, type User } from './api';
 
 export default function App() {
@@ -26,7 +27,14 @@ export default function App() {
     <>
       <PixelTown />
       <div className="vignette" />
-      {!checking && (user ? <HomePage user={user} onLogout={logout} /> : <LoginPage onLogin={setUser} />)}
+      {!checking &&
+        (!user ? (
+          <LoginPage onLogin={setUser} />
+        ) : user.role === 'student' ? (
+          <StudentDashboard user={user} onLogout={logout} />
+        ) : (
+          <HomePage user={user} onLogout={logout} />
+        ))}
     </>
   );
 }
