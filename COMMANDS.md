@@ -9,6 +9,24 @@ Everything you type to set up, run and share the project. Run commands from any 
 
 ---
 
+## 0. The METAVERSE environment (like a Python venv)
+
+Activate it in PowerShell. The first time, it downloads a private Node.js LTS into `env\` and installs all packages with it:
+
+```powershell
+(Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned) ; (& C:\Users\shaur\metaverse\activate.ps1)
+```
+
+| Command | What it does |
+|---|---|
+| `deactivate` | Leave the environment (back to your system Node, old prompt and folder) |
+| `& .\activate.ps1 -Recreate` | Delete `env\` and rebuild it with the newest Node LTS |
+| `Remove-Item -Recurse -Force env` | Remove the environment completely |
+
+While active, the prompt shows `(metaverse)` and `node`, `npm`, `metaverse`, `vite`, `electron` all come from this project.
+
+---
+
 ## 1. The `metaverse` command
 
 | Command | What it does |
@@ -92,6 +110,7 @@ Optional — use `metaverse` from any folder (PowerShell, run once, then open a 
 | `desktop/` | Electron desktop shell |
 | `server/data/db.json` | All saved data — git-ignored; delete (or `metaverse reset`) to start fresh |
 | `server/.env` | Secret key and port — git-ignored, created by `metaverse setup` |
+| `env/` | The METAVERSE environment: private Node.js + npm cache — git-ignored, created by `activate.ps1` |
 | `TODO.md` | What's next |
 | `DOCS.md` | Full project spec |
 
