@@ -22,11 +22,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return data as T;
 }
 
-export const login = (rollNo: string, password: string) =>
+export const login = (rollNo: string, password: string, role: Role) =>
   request<{ token: string; user: User }>('/api/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ rollNo, password }),
+    body: JSON.stringify({ rollNo, password, role }),
   });
 
 export const fetchMe = (token: string) =>
@@ -83,12 +83,54 @@ export interface Pbl {
   attendance: Summary & { threshold: number; sessions: (AttendanceRecord & { topic: string })[] };
 }
 
-const authed = <T,>(path: string) =>
-  request<T>(path, { headers: { Authorization: `Bearer ${session.load() ?? ''}` } });
+const authed = <T,>(path: string, init: RequestInit = {}) =>
+  request<T>(path, {
+    ...init,
+    headers: { ...init.headers, Authorization: `Bearer ${session.load() ?? ''}` },
+  });
 
 export const fetchProfile = () => authed<Profile>('/api/student/profile');
 export const fetchAttendance = () => authed<Attendance>('/api/student/attendance');
 export const fetchPbl = () => authed<Pbl>('/api/student/pbl');
+
+// ---- teacher ----
+
+export type Status = 'present' | 'absent';
+
+export interface TeacherClass {
+  key: string;
+  kind: 'subject' | 'pbl';
+  title: string;
+  subtitle: string;
+  students: number;
+  pending: number;
+}
+
+export interface SessionInfo {
+  date: string;
+  state: 'marked' | 'pending' | 'demo';
+  markedAt: string | null;
+}
+
+export interface RosterEntry {
+  userId: number;
+  rollNo: string;
+  name: string;
+  status: Status | null;
+  percent: number;
+}
+
+const cls = (key: string) => `/api/teacher/classes/${encodeURIComponent(key)}/sessions`;
+
+export const fetchTeacherClasses = () => authed<{ threshold: number; classes: TeacherClass[] }>('/api/teacher/classes');
+export const fetchSessions = (key: string) => authed<{ sessions: SessionInfo[] }>(cls(key));
+export const fetchRoster = (key: string, date: string) => authed<{ date: string; roster: RosterEntry[] }>(`${cls(key)}/${date}`);
+export const saveRoster = (key: string, date: string, statuses: Record<number, Status>) =>
+  authed<{ date: string; roster: RosterEntry[]; sessions: SessionInfo[] }>(`${cls(key)}/${date}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ statuses }),
+  });
 
 // "Remember me" keeps the token across restarts; otherwise it dies with the tab/window.
 const KEY = 'metaverse.token';

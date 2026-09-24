@@ -219,14 +219,17 @@ npm run dev:desktop   # same, plus the desktop window
 npm run desktop       # build the client and open it in the desktop shell
 ```
 
-Dev accounts (in-memory until the PostgreSQL schema lands):
+Dev accounts (in-memory until the PostgreSQL schema lands). Pick the matching tab on the login screen:
 
-| Roll no.  | Password     | Role    |
-|-----------|--------------|---------|
-| `2301001` | `student123` | student (PBL group G-07 lead) |
-| `2301002`–`2301004` | `student123` | students in the same PBL group |
-| `T1001`   | `teacher123` | teacher |
-| `A0001`   | `admin123`   | admin   |
+| Tab     | ID                  | Password     | Notes |
+|---------|---------------------|--------------|-------|
+| Student | `2301001`           | `student123` | PBL group G-07 lead |
+| Student | `2301002`–`2301024` | `student123` | rest of CSE 5th sem, section A |
+| Teacher | `T1001`             | `teacher123` | teaches DBMS + DBMS Lab, mentors PBL G-07 and G-08 |
+| Admin   | `A0001`             | `admin123`   | dashboard not built yet |
+
+Attendance before 18 Sep 2026 is generated demo history; later sessions show as "to mark" until the teacher marks them.
+Saved marks live in `server/data/attendance.json` (git-ignored) — delete it to reset.
 
 Copy `server/.env.example` to `server/.env` and set `JWT_SECRET` before deploying.
 

@@ -18,10 +18,14 @@ Things we've agreed to do later. Move items to "Done" (or delete them) as they l
 
 ## Attendance & data
 
-- [ ] Teacher / mentor screen to mark class and PBL attendance (replaces demo data)
 - [ ] PostgreSQL schema + move users, students, attendance and PBL out of the in-memory store
 - [ ] Replace demo subjects/faculty with the real Semester 5 timetable
 - [ ] GEHU ERP import (records already carry a `source` field for this)
+
+## Admin
+
+- [ ] Admin dashboard: manage students, teachers, subjects and PBL groups; assign teachers to classes
+- [ ] Replace the demo admin account `A0001` with your own admin login
 
 ## Housekeeping
 
@@ -29,3 +33,8 @@ Things we've agreed to do later. Move items to "Done" (or delete them) as they l
 - [ ] Set a real `JWT_SECRET` in `server/.env` before any deployment
 - [ ] Desktop installer (electron-builder)
 - [ ] Password reset flow (currently "ask your admin")
+
+## Done
+
+- [x] Teacher / mentor attendance marking (classes + PBL)
+- [x] Login with Student / Teacher / Admin account types

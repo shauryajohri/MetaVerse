@@ -3,6 +3,7 @@ import PixelTown from './town/PixelTown';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import StudentDashboard from './pages/student/StudentDashboard';
+import TeacherDashboard from './pages/teacher/TeacherDashboard';
 import { fetchMe, session, type User } from './api';
 
 export default function App() {
@@ -32,6 +33,8 @@ export default function App() {
           <LoginPage onLogin={setUser} />
         ) : user.role === 'student' ? (
           <StudentDashboard user={user} onLogout={logout} />
+        ) : user.role === 'teacher' ? (
+          <TeacherDashboard user={user} onLogout={logout} />
         ) : (
           <HomePage user={user} onLogout={logout} />
         ))}

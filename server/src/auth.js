@@ -9,6 +9,7 @@ if (!process.env.JWT_SECRET) console.warn('[auth] JWT_SECRET not set — using a
 // Compared against when the roll number doesn't exist, so response time doesn't reveal valid IDs.
 const DUMMY_HASH = bcrypt.hashSync('timing-equaliser', 10);
 
+const ROLES = ['student', 'teacher', 'admin'];
 const MAX_FAILS = 5;
 const LOCK_MS = 60_000;
 const fails = new Map(); // `${ip}:${rollNo}` -> { count, until }
@@ -18,7 +19,9 @@ export const authRouter = Router();
 authRouter.post('/login', async (req, res) => {
   const rollNo = String(req.body?.rollNo ?? '').trim().toUpperCase();
   const password = String(req.body?.password ?? '');
-  if (!rollNo || !password) return res.status(400).json({ error: 'Roll number and password are required.' });
+  const role = req.body?.role; // account type picked on the login screen
+  if (!rollNo || !password) return res.status(400).json({ error: 'ID and password are required.' });
+  if (!ROLES.includes(role)) return res.status(400).json({ error: 'Choose Student, Teacher or Admin.' });
 
   const key = `${req.ip}:${rollNo}`;
   const now = Date.now();
@@ -30,10 +33,12 @@ authRouter.post('/login', async (req, res) => {
 
   const user = findByRollNo(rollNo);
   const ok = await bcrypt.compare(password, user?.passwordHash ?? DUMMY_HASH);
-  if (!user || !ok) {
+  // A wrong account type fails exactly like a wrong password, so the response
+  // never reveals which IDs exist or what role they have.
+  if (!user || !ok || user.role !== role) {
     const count = (f?.count ?? 0) + 1;
     fails.set(key, { count, until: count >= MAX_FAILS ? now + LOCK_MS : 0 });
-    return res.status(401).json({ error: 'Invalid roll number or password.' });
+    return res.status(401).json({ error: 'Invalid ID or password. Check you picked the right account type.' });
   }
 
   fails.delete(key);

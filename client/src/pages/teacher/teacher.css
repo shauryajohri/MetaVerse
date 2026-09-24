@@ -1,0 +1,356 @@
+/* Teacher attendance marking — builds on dashboard.css */
+
+.class-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+  gap: 14px;
+  margin-bottom: 4px;
+}
+
+.class-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  margin-bottom: 16px;
+  padding: 12px 14px 14px;
+  text-align: left;
+  border: 0;
+  cursor: pointer;
+}
+
+.class-card strong,
+.class-card small {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.class-card strong {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.class-card small {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.class-card .eyebrow {
+  font-size: 13px;
+}
+
+.class-card:hover {
+  background: #fffaf0;
+}
+
+.class-card.active {
+  background: #fdf3cf;
+  box-shadow:
+    inset 0 0 0 3px var(--ink),
+    inset 0 -6px 0 0 var(--gold),
+    5px 5px 0 0 rgba(8, 10, 22, 0.4);
+}
+
+.class-card:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.class-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.class-meta .chip {
+  padding: 1px 6px;
+  font-size: 13px;
+  text-transform: none;
+}
+
+/* overflow must stay visible or the sticky save bar stops sticking */
+.card.flush.marking {
+  overflow: visible;
+}
+
+/* ---------- session strip ---------- */
+
+.session-strip {
+  display: flex;
+  gap: 8px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  background: var(--paper-2);
+  box-shadow: inset 0 -3px 0 0 var(--line);
+}
+
+.session {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-width: 78px;
+  padding: 7px 8px 6px;
+  background: #fff;
+  border: 0;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 2px var(--line);
+}
+
+.session strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.session span {
+  font-size: 14px;
+}
+
+.session small {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.session.pending {
+  box-shadow: inset 0 0 0 2px #dd9f22;
+}
+
+.session.pending small {
+  color: #9a6200;
+}
+
+.session.marked small {
+  color: #2f8a3a;
+}
+
+.session.active {
+  background: var(--gold);
+  box-shadow: inset 0 0 0 3px var(--ink);
+}
+
+.session.active small {
+  color: var(--ink);
+}
+
+.session:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* ---------- roster ---------- */
+
+.loading-inline {
+  margin: 0;
+  padding: 24px 20px;
+  font-size: 17px;
+}
+
+.roster-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px 12px;
+}
+
+.roster-bar > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.roster-bar strong {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.roster-bar small {
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+.c-present {
+  color: #2f8a3a;
+}
+
+.c-absent {
+  color: var(--danger);
+}
+
+.bulk {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-small {
+  padding: 7px 12px;
+  font-size: 15px;
+  background: #fff;
+  border: 0;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.btn-small:hover {
+  background: var(--gold);
+}
+
+.roster {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 24px;
+  padding: 0 20px 8px;
+}
+
+.roster-row {
+  display: grid;
+  grid-template-columns: 26px 1fr 64px auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px;
+  border-top: 2px dashed var(--line);
+}
+
+.roster-row:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: -3px;
+}
+
+.roster-row.absent {
+  background: #fdecea;
+}
+
+.r-num {
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-align: right;
+}
+
+.r-name {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.r-name strong {
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.r-name small {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.r-pct.pct {
+  font-size: 11px;
+  text-align: right;
+}
+
+.toggle {
+  display: flex;
+}
+
+.toggle button {
+  width: 38px;
+  height: 32px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: #fff;
+  border: 0;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.toggle button + button {
+  margin-left: -2px;
+}
+
+.toggle button:hover {
+  color: var(--ink);
+  background: var(--paper-2);
+}
+
+.toggle button.on.present {
+  color: #fff;
+  background: #4aa843;
+}
+
+.toggle button.on.absent {
+  color: #fff;
+  background: var(--danger);
+}
+
+.toggle button:focus-visible {
+  position: relative;
+  outline: 3px solid var(--gold);
+}
+
+/* ---------- save bar ---------- */
+
+.save-bar {
+  position: sticky;
+  bottom: -40px; /* cancels .content's bottom padding so the bar sits on the window edge */
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 3px 3px;
+  padding: 12px 17px;
+  background: var(--paper);
+  box-shadow:
+    inset 0 3px 0 0 var(--line),
+    0 -6px 12px -6px rgba(8, 10, 22, 0.25);
+}
+
+.note {
+  font-size: 16px;
+  color: var(--ink-soft);
+}
+
+.note.ok {
+  color: #2f8a3a;
+}
+
+.note.err {
+  color: var(--danger);
+}
+
+.hint-keys {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.nav-badge {
+  margin-left: auto;
+  padding: 1px 7px;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--gold);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+@media (max-width: 1180px) {
+  .roster {
+    grid-template-columns: 1fr;
+  }
+
+  .hint-keys {
+    display: none;
+  }
+
+  .save-bar .btn-primary.slim {
+    margin-left: auto;
+  }
+}
