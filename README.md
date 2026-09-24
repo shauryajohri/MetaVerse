@@ -202,6 +202,8 @@ Planned modules include:
 
 # 🧑‍💻 Getting Started
 
+📋 **Quick reference:** [COMMANDS.md](COMMANDS.md) — every command, login, git workflow and fix in one page.
+
 ### Code layout
 
 | Folder     | What                                                                 |
