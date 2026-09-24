@@ -212,12 +212,19 @@ Planned modules include:
 
 ### Run
 
+You need [Node.js](https://nodejs.org) 22.9+. Then, from the project folder:
+
 ```bash
-npm install
-npm run dev           # web: API on :4000, app on http://localhost:5180
-npm run dev:desktop   # same, plus the desktop window
-npm run desktop       # build the client and open it in the desktop shell
+metaverse setup       # first time: checks Node, downloads all packages, creates server/.env
+metaverse dev         # web app → http://localhost:5180
+metaverse desktop     # desktop app
+metaverse build       # production build
+metaverse reset       # wipe saved data, back to the demo data
+metaverse help        # list commands
 ```
+
+In PowerShell type `.\metaverse <command>`; on macOS/Linux `./metaverse <command>`.
+The same things work as npm scripts (`npm install`, `npm run dev`, `npm run dev:desktop`, `npm run build`).
 
 Dev accounts (in-memory until the PostgreSQL schema lands). Pick the matching tab on the login screen:
 
