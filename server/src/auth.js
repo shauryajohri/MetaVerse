@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { findByRollNo, findById, publicUser } from './users.js';
+import { MIN_PASSWORD, findByRollNo, findById, publicUser, setPassword } from './users.js';
 
 const SECRET = process.env.JWT_SECRET ?? 'dev-only-insecure-secret';
 if (!process.env.JWT_SECRET) console.warn('[auth] JWT_SECRET not set — using an insecure dev secret');
@@ -63,3 +63,12 @@ export const requireRole = (...roles) => (req, res, next) =>
   roles.includes(req.user.role) ? next() : res.status(403).json({ error: 'You do not have access to this.' });
 
 authRouter.get('/me', requireAuth, (req, res) => res.json({ user: publicUser(req.user) }));
+
+authRouter.post('/password', requireAuth, async (req, res) => {
+  const current = String(req.body?.current ?? '');
+  const next = String(req.body?.next ?? '');
+  if (!(await bcrypt.compare(current, req.user.passwordHash))) return res.status(400).json({ error: 'Your current password is wrong.' });
+  if (next.length < MIN_PASSWORD) return res.status(400).json({ error: `New password must be at least ${MIN_PASSWORD} characters.` });
+  setPassword(req.user, next);
+  res.json({ ok: true });
+});

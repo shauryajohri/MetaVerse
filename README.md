@@ -226,10 +226,10 @@ Dev accounts (in-memory until the PostgreSQL schema lands). Pick the matching ta
 | Student | `2301001`           | `student123` | PBL group G-07 lead |
 | Student | `2301002`–`2301024` | `student123` | rest of CSE 5th sem, section A |
 | Teacher | `T1001`             | `teacher123` | teaches DBMS + DBMS Lab, mentors PBL G-07 and G-08 |
-| Admin   | `A0001`             | `admin123`   | dashboard not built yet |
+| Admin   | `A0001`             | `admin123`   | change this password in Settings |
 
 Attendance before 18 Sep 2026 is generated demo history; later sessions show as "to mark" until the teacher marks them.
-Saved marks live in `server/data/attendance.json` (git-ignored) — delete it to reset.
+All data (users, classes, marks) is saved to `server/data/db.json` (git-ignored). Delete it to reset to the demo data.
 
 Copy `server/.env.example` to `server/.env` and set `JWT_SECRET` before deploying.
 

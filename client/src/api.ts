@@ -120,6 +120,62 @@ export interface RosterEntry {
   percent: number;
 }
 
+export const changePassword = (current: string, next: string) =>
+  authed<{ ok: true }>('/api/auth/password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ current, next }),
+  });
+
+// ---- admin ----
+
+export interface AdminOverview {
+  threshold: number;
+  counts: { students: number; teachers: number; subjects: number; pblGroups: number };
+  averageAttendance: number;
+  belowThreshold: number;
+  withShortSubjects: number;
+  unassigned: number;
+  pendingByTeacher: { userId: number; name: string; pending: number }[];
+}
+
+export interface StudentStanding {
+  userId: number;
+  rollNo: string;
+  name: string;
+  section: string;
+  pblGroup: string | null;
+  overall: number;
+  pbl: number | null;
+  short: { code: string; name: string; percent: number; mustAttend: number }[];
+}
+
+export interface AdminUser extends User {
+  detail: string;
+}
+
+export interface AdminClasses {
+  subjects: { code: string; name: string; section: string; days: number[]; teacherId: number | null; faculty: string; pending: number }[];
+  pblGroups: { id: string; title: string; mentorId: number | null; mentor: string; members: string[]; pending: number }[];
+  teachers: { id: number; name: string; rollNo: string }[];
+}
+
+const json = (method: string, body: unknown): RequestInit => ({
+  method,
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(body),
+});
+
+export const fetchAdminOverview = () => authed<AdminOverview>('/api/admin/overview');
+export const fetchStandings = () => authed<{ students: StudentStanding[] }>('/api/admin/students');
+export const fetchUsers = () => authed<{ users: AdminUser[] }>('/api/admin/users');
+export const createUser = (u: { role: Role; rollNo: string; name: string; password: string }) =>
+  authed<{ user: User }>('/api/admin/users', json('POST', u));
+export const resetPassword = (id: number, password: string) => authed<{ ok: true }>(`/api/admin/users/${id}/password`, json('POST', { password }));
+export const fetchAdminClasses = () => authed<AdminClasses>('/api/admin/classes');
+export const assignTeacher = (kind: 'subject' | 'pbl', id: string, teacherId: number | null) =>
+  authed<Omit<AdminClasses, 'teachers'>>(`/api/admin/classes/${kind}/${encodeURIComponent(id)}/teacher`, json('PUT', { teacherId }));
+
 const cls = (key: string) => `/api/teacher/classes/${encodeURIComponent(key)}/sessions`;
 
 export const fetchTeacherClasses = () => authed<{ threshold: number; classes: TeacherClass[] }>('/api/teacher/classes');

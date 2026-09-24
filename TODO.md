@@ -24,8 +24,8 @@ Things we've agreed to do later. Move items to "Done" (or delete them) as they l
 
 ## Admin
 
-- [ ] Admin dashboard: manage students, teachers, subjects and PBL groups; assign teachers to classes
-- [ ] Replace the demo admin account `A0001` with your own admin login
+- [ ] Replace the demo admin account `A0001` with your own admin login (Settings → change password, or add a new admin in Users)
+- [ ] Admin: create/edit subjects and PBL groups, move students between groups, deactivate users
 
 ## Housekeeping
 
@@ -38,3 +38,4 @@ Things we've agreed to do later. Move items to "Done" (or delete them) as they l
 
 - [x] Teacher / mentor attendance marking (classes + PBL)
 - [x] Login with Student / Teacher / Admin account types
+- [x] Admin dashboard: overview, attendance monitoring, users (add, reset password), assign teachers to classes/PBL, change own password

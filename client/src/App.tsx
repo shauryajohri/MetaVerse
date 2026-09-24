@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import PixelTown from './town/PixelTown';
 import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage';
+import AdminDashboard from './pages/admin/AdminDashboard';
 import StudentDashboard from './pages/student/StudentDashboard';
 import TeacherDashboard from './pages/teacher/TeacherDashboard';
 import { fetchMe, session, type User } from './api';
@@ -36,7 +36,7 @@ export default function App() {
         ) : user.role === 'teacher' ? (
           <TeacherDashboard user={user} onLogout={logout} />
         ) : (
-          <HomePage user={user} onLogout={logout} />
+          <AdminDashboard user={user} onLogout={logout} />
         ))}
     </>
   );

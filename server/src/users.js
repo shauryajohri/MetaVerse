@@ -1,25 +1,25 @@
 import bcrypt from 'bcryptjs';
+import { db, save } from './store.js';
+import { studentProfile } from './seed.js';
 
-// Temporary in-memory store. Replaced by the PostgreSQL `users` / `students` /
-// `teachers` tables in Phase 1 — keep the same function signatures.
+// Users live in data/db.json (see store.js). Students carry their academic details in `profile`.
 
-// CSE 5th sem, section A. Roll numbers 2301001… in this order.
-const SECTION_A = [
-  'Demo Student', 'Aarav Negi', 'Isha Rawat', 'Kabir Bisht', 'Ananya Joshi', 'Rohan Pant',
-  'Sneha Chauhan', 'Aditya Rana', 'Priya Bhatt', 'Vivek Semwal', 'Neha Gusain', 'Arjun Thapa',
-  'Kritika Uniyal', 'Harsh Nautiyal', 'Simran Kaur', 'Yash Dobhal', 'Tanya Mehra', 'Mohit Kandpal',
-  'Riya Sati', 'Deepak Bora', 'Aisha Khan', 'Nikhil Dhyani', 'Pooja Rautela', 'Sahil Arora',
-];
+export const findByRollNo = (rollNo) => db.users.find((u) => u.rollNo === rollNo);
+export const findById = (id) => db.users.find((u) => u.id === id);
+export const usersByRole = (role) => db.users.filter((u) => u.role === role);
+export const publicUser = ({ passwordHash, profile, ...u }) => u;
 
-const seed = [
-  ...SECTION_A.map((name, i) => ({ id: 100 + i, rollNo: String(2301001 + i), name, role: 'student', password: 'student123' })),
-  { id: 2, rollNo: 'T1001', name: 'Demo Teacher', role: 'teacher', password: 'teacher123' },
-  { id: 3, rollNo: 'A0001', name: 'Demo Admin', role: 'admin', password: 'admin123' },
-];
+export const MIN_PASSWORD = 8;
 
-const users = seed.map(({ password, ...u }) => ({ ...u, passwordHash: bcrypt.hashSync(password, 8) }));
+export function createUser({ role, rollNo, name, password }) {
+  const user = { id: db.nextId++, rollNo, name, role, passwordHash: bcrypt.hashSync(password, 10) };
+  if (role === 'student') user.profile = studentProfile(name, rollNo);
+  db.users.push(user);
+  save();
+  return user;
+}
 
-export const findByRollNo = (rollNo) => users.find((u) => u.rollNo === rollNo);
-export const findById = (id) => users.find((u) => u.id === id);
-export const usersByRole = (role) => users.filter((u) => u.role === role);
-export const publicUser = ({ passwordHash, ...u }) => u;
+export function setPassword(user, password) {
+  user.passwordHash = bcrypt.hashSync(password, 10);
+  save();
+}
