@@ -7,7 +7,9 @@ import AttendanceView from './AttendanceView';
 import PblView from './PblView';
 import ProfileView from './ProfileView';
 
+// 'campus' is the bare map; the rest open as a panel over it
 const TABS = [
+  { id: 'campus', label: 'Campus', icon: '⌂' },
   { id: 'overview', label: 'Overview', icon: '◆' },
   { id: 'attendance', label: 'Attendance', icon: '▦' },
   { id: 'pbl', label: 'PBL', icon: '⚑' },
@@ -34,7 +36,7 @@ export default function StudentDashboard({ user, onLogout }: { user: User; onLog
   useEffect(load, []);
 
   return (
-    <DashShell user={user} onLogout={onLogout} tabs={TABS} active={tab}>
+    <DashShell user={user} onLogout={onLogout} tabs={TABS} active={tab} home="campus">
       {error ? (
         <section className="card">
           <h3>Couldn't load your records</h3>
