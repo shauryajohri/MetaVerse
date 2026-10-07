@@ -17,6 +17,12 @@ Activate it in PowerShell. The first time, it downloads a private Node.js LTS in
 (Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned) ; (& C:\Users\shaur\metaverse\activate.ps1)
 ```
 
+Activate **and** start everything (website in your browser + desktop app) in one go:
+
+```powershell
+(Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned) ; (& C:\Users\shaur\metaverse\activate.ps1 -Start)
+```
+
 | Command | What it does |
 |---|---|
 | `deactivate` | Leave the environment (back to your system Node, old prompt and folder) |
@@ -32,6 +38,7 @@ While active, the prompt shows `(metaverse)` and `node`, `npm`, `metaverse`, `vi
 | Command | What it does |
 |---|---|
 | `metaverse setup` | **First time / after pulling changes.** Checks Node, downloads all packages, creates `server/.env` |
+| `metaverse start` | Run **everything**: opens http://localhost:5180 in your browser **and** the desktop app |
 | `metaverse dev` | Run the **web app** → open http://localhost:5180 |
 | `metaverse desktop` | Run the **desktop app** (opens its own window) |
 | `metaverse build` | Type-check and build the production version into `client/dist` |
@@ -45,6 +52,7 @@ While active, the prompt shows `(metaverse)` and `node`, `npm`, `metaverse`, `vi
 | metaverse | npm |
 |---|---|
 | `metaverse setup` | `npm install` |
+| `metaverse start` | `npm run dev:all` |
 | `metaverse dev` | `npm run dev` |
 | `metaverse desktop` | `npm run dev:desktop` |
 | `metaverse build` | `npm run build` |

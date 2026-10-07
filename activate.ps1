@@ -9,10 +9,11 @@
 # While active: prompt shows (metaverse), you're in the project folder, and node / npm /
 # metaverse / vite / electron all come from this project. `deactivate` undoes it.
 #
+#   & .\activate.ps1 -Start       activate, then run the website + desktop app (metaverse start)
 #   & .\activate.ps1 -Recreate    delete env\ and build it again from scratch
 #   Remove-Item -Recurse env      remove the environment completely
 
-param([switch]$Recreate)
+param([switch]$Recreate, [switch]$Start)
 
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
@@ -20,6 +21,7 @@ $envDir = Join-Path $root 'env'
 $nodeDir = Join-Path $envDir 'node'
 
 if ($env:METAVERSE_ACTIVE) {
+    if ($Start) { & (Join-Path $root 'metaverse.cmd') start; return }
     Write-Host "METAVERSE environment is already active. Run 'deactivate' first." -ForegroundColor Yellow
     return
 }
@@ -120,8 +122,11 @@ if (-not (Test-Path (Join-Path $root 'node_modules')) -or (Get-Content $stamp -E
 Write-Host ''
 Write-Host "METAVERSE environment active  (Node $(node --version), npm $(npm --version))" -ForegroundColor Green
 Write-Host "  node / npm from    $nodeDir"
+Write-Host '  metaverse start    web app in your browser + desktop app'
 Write-Host '  metaverse dev      web app  -> http://localhost:5180'
 Write-Host '  metaverse desktop  desktop app'
 Write-Host '  metaverse help     all commands'
 Write-Host '  deactivate         leave the environment'
 Write-Host ''
+
+if ($Start) { & (Join-Path $root 'metaverse.cmd') start }

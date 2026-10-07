@@ -71,6 +71,10 @@ const commands = {
     help: 'Run the desktop app (plus the API and dev server)',
     fn: () => npm('run', 'dev:desktop'),
   },
+  start: {
+    help: 'Run everything: web app in your browser + the desktop app',
+    fn: () => npm('run', 'dev:all'),
+  },
   build: {
     help: 'Type-check and build the production client into client/dist',
     fn: () => npm('run', 'build'),
